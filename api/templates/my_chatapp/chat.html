@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg rounded mt-5">
+        <div class="card-header d-flex align-items-center">
+          <img src="{% static 'images/logo.png' %}" alt="Logo" class="mr-3" style="width: 40px; height: 40px;">
+          <h4 class="mb-0">Chat</h4>
+          <a href="{% url 'client_dashboard' %}" class="btn btn-primary ml-auto">Back to Dashboard</a>
+        </div>
+        <div class="card-body">
+          <div class="chat-container rounded">
+            <div class="chat-header">
+              <img src="{% static 'images/logo.png' %}" alt="Logo" class="chat-logo">
+              <h4>Chat</h4>
+            </div>
+            {% if no_lawyers_available %}
+              <div class="alert alert-info">
+                There are no lawyers available at the moment. Please try again later.
+              </div>
+            {% else %}
+              <div class="chat-body" id="chat-body">
+                <!-- Chat messages will be dynamically added here -->
+              </div>
+              <div class="chat-footer">
+                <select class="form-control" id="lawyer-select">
+                  <option value="">Select a lawyer</option>
+                  {% for lawyer in lawyers %}
+                    <option value="{{ lawyer.id }}">{{ lawyer.get_full_name }}</option>
+                  {% endfor %}
+                </select>
+                <input type="text" class="form-control" id="chat-input" placeholder="Type your message..." aria-label="Message" aria-describedby="button-send">
+                <button class="btn btn-primary" type="button" id="button-send">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for user profile -->
+<div class="modal fade" id="userProfileModal" tabindex="-1" role="dialog" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="{% static 'images/user_profile.png' %}" alt="User Profile Image" class="rounded-circle mb-3" id="user-profile-image" width="50" height="50">
+        <h5 class="modal-title" id="userProfileModalLabel">User Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <img src="" alt="User Profile Image" class="rounded-circle mb-3" id="user-profile-image" width="100" height="100">
+          <h5 id="user-full-name"></h5>
+          <p id="user-status"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<link rel="stylesheet" href="{% static 'css/chatapp/chat.css' %}">
+{% endblock %}
+
+{% block scripts %}
+  <script>
+$(document).ready(function() {
+  var chatContainer = $('#chat-body');
+  var chatInput = $('#chat-input');
+  var sendButton = $('#button-send');
+  var lawyerSelect = $('#lawyer-select');
+
+  // Function to add a new message to the chat
+  function addMessage(sender, message, timestamp, isLawyer) {
+    var messageElement = $('<div>').addClass('chat-message');
+    var senderElement = $('<span>').addClass('chat-sender').text(sender);
+    var timestampElement = $('<span>').addClass('chat-timestamp').text(timestamp);
+    var messageTextElement = $('<p>').addClass('chat-text').text(message);
+    var actionsElement = $('<div>').addClass('chat-actions');
+
+    if (isLawyer) {
+      messageElement.addClass('lawyer-message');
+      actionsElement.append('<button class="btn btn-sm btn-danger delete-message">Delete</button>');
+    } else {
+      messageElement.addClass('client-message');
+      actionsElement.append('<button class="btn btn-sm btn-warning mark-message">Mark</button>');
+    }
+
+    messageElement.append(senderElement, timestampElement, messageTextElement, actionsElement);
+    chatContainer.append(messageElement);
+    chatContainer.scrollTop(chatContainer[0].scrollHeight);
+  }
+
+  // Send a new message
+  sendButton.click(function() {
+    var message = chatInput.val().trim();
+    var recipientId = lawyerSelect.val();
+
+    if (message && recipientId) {
+      $.ajax({
+        url: '/send_message/',
+        type: 'POST',
+        data: {
+          message: message,
+          recipient_id: recipientId
+        },
+        success: function(response) {
+          addMessage(
+            '{{ request.user.get_full_name }}',
+            message,
+            response.timestamp,
+            '{{ request.user.is_lawyer }}'
+          );
+          chatInput.val('');
+        },
+        error: function(xhr, status, error) {
+          console.error('Error sending message:', error);
+        }
+      });
+    }
+  });
+
+  // Load initial messages
+  $.ajax({
+    url: '/get_messages/',
+    type: 'GET',
+    data: {
+      recipient_id: lawyerSelect.val()
+    },
+    success: function(response) {
+      response.forEach(function(message) {
+        addMessage(
+          message.sender_name,
+          message.content,
+          message.timestamp,
+          message.is_lawyer
+        );
+      });
+    },
+    error: function(xhr, status, error) {
+      console.error('Error loading messages:', error);
+    }
+  });
+
+  // Handle lawyer selection change
+  lawyerSelect.change(function() {
+    // Load messages for the selected lawyer
+    $.ajax({
+      url: '/get_messages/',
+      type: 'GET',
+      data: {
+        recipient_id: lawyerSelect.val()
+      },
+      success: function(response) {
+        chatContainer.empty();
+        response.forEach(function(message) {
+          addMessage(
+            message.sender_name,
+            message.content,
+            message.timestamp,
+            message.is_lawyer
+          );
+        });
+      },
+      error: function(xhr, status, error) {
+        console.error('Error loading messages:', error);
+      }
+    });
+  });
+});
+  </script>
+{% endblock %}

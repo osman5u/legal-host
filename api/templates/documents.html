@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/documents.css' %}">
+  <script src="{% static 'js/documents.js' %}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container shadow-container">
+  <h1 class="text-center shiny-text" style="font-weight: bold">Uploaded Documents</h1>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped">
+      <thead class="" style="background-color: #28ce03; color: #fff;">
+        <tr>
+          <th>ID</th>
+          <th>Case Title</th>
+          <th>Client</th>
+          <th>Document</th>
+          <th>Uploaded Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for document in pdf_documents %}
+        <tr class="zoom-effect animated-item pdf-row">
+          <td>{{ document.id }}</td>
+          <td>{{ document.case.title }}</td>
+          <td>{{ document.uploaded_by.full_name }}</td>
+          <td><a href="#" class="view-document" data-file-url="{{ document.file.url }}" data-file-type="{{ document.file.type }}"><i class="fas fa-file-pdf fa-3x"></i></a></td>
+          <td>{{ document.uploaded_at }}</td>
+          <td>
+            <a href="{{ document.file.url }}" class="btn btn-primary btn-sm" style="background-color: #28ce03; border-color: #28ce03;" download>Download</a>
+          </td>
+        </tr>
+        {% endfor %}
+
+        {% for document in doc_documents %}
+        <tr class="zoom-effect animated-item doc-row">
+          <td>{{ document.id }}</td>
+          <td>{{ document.case.title }}</td>
+          <td>{{ document.uploaded_by.full_name }}</td>
+          <td><a href="#" class="view-document" data-file-url="{{ document.file.url }}" data-file-type="{{ document.file.type }}"><i class="fas fa-file-word fa-3x"></i></a></td>
+          <td>{{ document.uploaded_at }}</td>
+          <td>
+            <a href="{{ document.file.url }}" class="btn btn-primary btn-sm" style="background-color: #28ce03; border-color: #28ce03;" download>Download</a>
+          </td>
+        </tr>
+        {% endfor %}
+
+        {% for document in image_documents %}
+        <tr class="zoom-effect animated-item image-row">
+          <td>{{ document.id }}</td>
+          <td>{{ document.case.title }}</td>
+          <td>{{ document.uploaded_by.full_name }}</td>
+          <td><a href="#" class="view-document" data-file-url="{{ document.file.url }}" data-file-type="{{ document.file.type }}"><i class="fas fa-file-image fa-3x"></i></a></td>
+          <td>{{ document.uploaded_at }}</td>
+          <td>
+            <a href="{{ document.file.url }}" class="btn btn-primary btn-sm" style="background-color: #28ce03; border-color: #28ce03;" download>Download</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal for viewing the document -->
+<div class="modal fade" id="documentModal" tabindex="-1" role="dialog" aria-labelledby="documentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="documentModalLabel">Document Viewer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="document-viewer"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <link rel="stylesheet" href="{% static 'css/documents.css' %}">
+ <script src="{% static 'js/documents.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,96 @@
+/* Fonts */
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Container */
+.shiny-box-shadow-container {
+  padding: 40px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Section Title */
+.section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #28ce03;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Table */
+.documents-table {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-header {
+  background-color: #28ce03;
+  color: #fff;
+}
+
+.table-header th {
+  font-weight: 600;
+}
+
+.table-row {
+  font-size: 16px;
+}
+
+.table-row:hover {
+  background-color: #f8f9fa;
+}
+
+.text-decoration-none {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Buttons */
+.update-button {
+  background-color: #28ce03;
+  border-color: #28ce03;
+  font-weight: 600;
+}
+
+.update-button:hover {
+  background-color: #23a703;
+  border-color: #23a703;
+}
+
+.delete-button {
+  background-color: #d9534f;
+  border-color: #d9534f;
+  font-weight: 600;
+}
+
+.delete-button:hover {
+  background-color: #c9302c;
+  border-color: #c9302c;
+}
+
+/* Animations */
+.zoom-effect {
+  transition: transform 0.3s ease;
+}
+
+.zoom-effect:hover {
+  transform: scale(1.02);
+}
+
+.animated-item {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

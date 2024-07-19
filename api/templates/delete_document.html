@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Delete Document</h1>
+    <p>Are you sure you want to delete the following document?</p>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ document.case.title }}</h5>
+        <p class="card-text">Uploaded by: {{ document.uploaded_by.full_name }}</p>
+        <p class="card-text">Uploaded at: {{ document.uploaded_at }}</p>
+        <a href="{{ document.file.url }}" class="card-link">{{ document.file.name }}</a>
+      </div>
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Confirm Deletion</button>
+      <a href="{% url 'documents_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,57 @@
+body {
+    background-image: url('{% static "img/background.jpg" %}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.update-profile-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    animation-duration: 0.5s;
+    width: 800px;
+}
+
+.update-profile-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.update-profile-form .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 1rem 1.2rem;
+    font-size: 1.2rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.update-profile-form .form-control:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.update-profile-button {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    width: 100%;
+    padding: 1rem 1.2rem;
+    font-size: 1.2rem;
+}
+
+.update-profile-button:hover {
+    background-color: #0056b3;
+    border-color: #004a99;
+}

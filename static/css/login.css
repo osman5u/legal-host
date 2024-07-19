@@ -1,0 +1,47 @@
+.login-container {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    animation: shine 2s ease-in-out infinite;
+}
+
+
+.left-column,
+.right-column {
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-column img {
+    max-width: 100%;
+    height: auto;
+}
+
+.login-form-container {
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+    margin-top: 20px;
+}
+
+.login-button {
+    width: 100%;
+}
+
+@keyframes shine {
+    0% {
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    }
+}

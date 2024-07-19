@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container" style="max-width: 500px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px;">
+    <h1 style="text-align: center; margin-bottom: 20px;">Upload Document</h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="case" style="font-weight: bold;">Case:</label>
+        <select class="form-control" id="case" name="case">
+          {% for case in pending_cases %}
+            <option value="{{ case.id }}">{{ case.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="lawyer" style="font-weight: bold;">Lawyer:</label>
+        <select class="form-control" id="lawyer" name="lawyer">
+          {% for lawyer in assigned_lawyers %}
+            <option value="{{ lawyer.id }}">{{ lawyer.username }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="file" style="font-weight: bold;">File:</label>
+        <input type="file" class="form-control-file" id="file" name="file">
+      </div>
+      <button type="submit" class="btn btn-primary" style="background-color: #28ce03; border-color: #28ce03; border-radius: 10px;">Upload</button>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block scripts %}
+
+{% block content %}
+  <h1 class="text-center mt-5 mb-4">Available Lawyers</h1>
+  <div class="row justify-content-center">
+    {% for lawyer in lawyers %}
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card shadow-sm">
+        {% if lawyer.profile_picture %}
+        <div class="card-img-top rounded-top overflow-hidden position-relative">
+          <img src="{{ lawyer.profile_picture.url }}" class="img-fluid rounded-0" alt="{{ lawyer.full_name }}">
+          <div class="zoom-overlay"></div> <!-- Zoom overlay for image zoom on hover -->
+        </div>
+        {% else %}
+        <div class="card-img-top bg-light text-center p-5 rounded-top">
+          <img src="/static/default_profile.png" class="img-fluid" alt="{{ lawyer.full_name }}">
+        </div>
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ lawyer.full_name }}</h5>
+          <p class="card-text">Role: {{ lawyer.get_role_display }}</p>
+          <a href="{% url 'file_case' lawyer.id %}" class="btn btn-primary btn-sm" style="background-color: #28ce03; border-color: #28ce03;">File Case</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    // Image zoom on hover effect
+    $(document).ready(function () {
+      $('.zoom-overlay').on('mouseenter mouseleave', function () {
+        $(this).toggleClass('zoom-overlay-active');
+      });
+    });
+  </script>
+<link rel="stylesheet" href="{% static 'css/available_lawyer.css' %}">
+{% endblock %}
+
+
+{% endblock %}

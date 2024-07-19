@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/clients_dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h1 class="text-center shiny-text">Client Dashboard</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary mb-3 dashboard-card">
+        <div class="card-header">
+          <i class="fas fa-gavel fa-3x"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">File Case</h5>
+          <p class="card-text text-center">
+            <span class="display-4 font-weight-bold" id="case-count"></span>
+          </p>
+          <a href="{% url 'available_lawyers' %}" class="btn btn-light btn-block">File Case</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-warning mb-3 dashboard-card">
+        <div class="card-header">
+          <i class="fas fa-bell fa-3x"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">Notifications</h5>
+          <p class="card-text text-center">
+            <span class="display-4 font-weight-bold" id="notification-count"></span>
+          </p>
+          <a href="{% url 'notifications' %}" class="btn btn-light btn-block">View Notifications</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success mb-3 dashboard-card">
+        <div class="card-header">
+          <i class="fas fa-history fa-3x"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">Case History</h5>
+          <p class="card-text text-center">
+            <span class="display-4 font-weight-bold" id="case-history-count">{{ case_history.count }}</span>
+          </p>
+          <a href="{% url 'case_history' %}" class="btn btn-light btn-block">View Case History</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-info mb-3 dashboard-card">
+        <div class="card-header">
+          <i class="fas fa-file-upload fa-3x"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">Upload Document</h5>
+          <p class="card-text text-center">
+            <span class="display-4 font-weight-bold" id="document-count"></span>
+          </p>
+          <a href="{% url 'upload_document' %}" class="btn btn-light btn-block">Upload Document</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-danger mb-3 dashboard-card">
+        <div class="card-header">
+          <i class="fas fa-file-alt fa-3x"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">Document History</h5>
+          <p class="card-text text-center">
+            <span class="display-4 font-weight-bold" id="document-history-count"></span>
+          </p>
+          <a href="{% url 'document_history' %}" class="btn btn-light btn-block">View Document History</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+    /* (Your existing CSS styles) */
+  </style>
+
+  <script>
+    $(document).ready(function() {
+      // AJAX calls to get the counts for each section
+      $.ajax({
+        url: '{% url "get_dashboard_counts" %}',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          $('#case-count').text(data.case_count);
+          $('#notification-count').text(data.notification_count);
+          $('#case-history-count').text(data.case_history_count);
+          $('#document-count').text(data.document_count);
+          $('#document-history-count').text(data.document_history_count);
+          $('#chat-forum-count').text(data.chat_forum_count);
+        },
+        error: function(xhr, status, error) {
+          console.error('Error fetching dashboard counts:', error);
+        }
+      });
+    });
+  </script>
+<link rel="stylesheet" href="{% static 'css/clients_dashboard.css' %}">
+
+{% endblock %}

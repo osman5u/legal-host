@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Case Details</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Case Information</h3>
+        <p><strong>Title:</strong> {{ case.title }}</p>
+        <p><strong>Client:</strong> {{ case.client.username }}</p>
+        <p><strong>Lawyer:</strong> {{ case.lawyer.username }}</p>
+        <p><strong>Status:</strong> {{ case.status }}</p>
+        <p><strong>Created:</strong> {{ case.created_at }}</p>
+        <p><strong>Updated:</strong> {{ case.updated_at }}</p>
+      </div>
+      <div class="col-md-6">
+        <h3>Documents</h3>
+        {% if documents %}
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>File</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for document in documents %}
+                <tr>
+                  <td><a href="{{ document.file.url }}">{{ document.file.name }}</a></td>
+                  <td>{{ document.description }}</td>
+                  <td>{{ document.status }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>No documents found for this case.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

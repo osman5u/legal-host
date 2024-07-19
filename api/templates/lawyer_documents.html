@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/documents.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid shiny-box-shadow-container">
+    <h1 class="section-title">Uploaded Documents</h1>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered table-striped documents-table">
+        <thead class="table-header">
+          <tr>
+            <th>ID</th>
+            <th>Case Title</th>
+            <th>Client</th>
+            <th>Document</th>
+            <th>Uploaded Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for document in documents %}
+          <tr class="table-row zoom-effect animated-item">
+            <td>{{ document.id }}</td>
+            <td>{{ document.case.title }}</td>
+            <td>{{ document.uploaded_by.full_name }}</td>
+            <td><a href="{{ document.file.url }}" target="_blank">{{ document.file.name }}</a></td>
+            <td>{{ document.created_at }}</td>
+            <td class="d-flex justify-content-end">
+              <a href="{{ document.file.url }}" class="btn btn-primary btn-sm update-button mr-2" download>Download</a>
+              <a href="{% url 'delete_document' document.id %}" class="btn btn-danger btn-sm delete-button">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

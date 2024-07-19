@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container shadow-container">
+  <h1 class="text-center shiny-text" style="font-weight: bold">Client Case History</h1>
+  <ul class="list-group">
+    {% for notification in notifications %}
+    <li class="list-group-item{% if not notification.read %} unread{% endif %} animated-item">
+      {{ notification.message }}
+    </li>
+    {% endfor %}
+  </ul>
+  <h2>File Case History</h2>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped">
+      <thead class="" style="  background-color: #28ce03; color: #fff;">
+        <tr>
+          <th>ID</th>
+          <th>Case Title</th>
+          <th>Description</th>
+          <th>Lawyer</th>
+          <th>Due Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for case in cases %}
+        <tr class="zoom-effect animated-item">
+          <td>{{ case.id }}</td>
+          <td>{{ case.title }}</td>
+          <td>{{ case.description }}</td>
+          <td>{{ case.lawyer.full_name }}</td>
+          <td>{{ case.due_date }}</td>
+          <td>{{ case.get_status_display }}</td>
+          <td>
+            <a href="{% url 'update_case_history' case.id %}" class="btn btn-primary btn-sm" style="background-color: #28ce03; border-color: #28ce03;">Update</a>
+            <a href="{% url 'delete_case' case.id %}" class="btn btn-danger btn-sm">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

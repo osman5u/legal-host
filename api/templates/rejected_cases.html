@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Rejected Cases</h1>
+    {% if rejected_cases %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Case Title</th>
+            <th>Client</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for case in rejected_cases %}
+            <tr>
+              <td>{{ case.title }}</td>
+              <td>{{ case.client.username }}</td>
+              <td>{{ case.status }}</td>
+              <td>
+                <a href="{% url 'view_case' case.id %}" class="btn btn-primary">View</a>
+                <a href="{% url 'delete_case' case.id %}" class="btn btn-danger">Delete</a>
+                <a href="{% url 'retrieve_case' case.id %}" class="btn btn-warning">Retrieve Back to Pending</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No rejected cases found.</p>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/documents.css' %}">
+  <script src="{% static 'js/documents.js' %}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container shadow-container">
+  <h1 class="text-center shiny-text">Lawyer Dashboard</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary mb-3 dashboard-card">
+        <div class="card-header">
+          <i class="fas fa-folder-open fa-3x"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">Pending Cases</h5>
+          <p class="card-text text-center">
+            <span class="display-4 font-weight-bold">{{ pending_cases.count }}</span>
+          </p>
+          <a href="{% url 'pending_cases' %}" class="btn btn-light btn-block">View Pending Cases</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success mb-3 dashboard-card">
+        <div class="card-header">
+          <i class="fas fa-check-circle fa-3x"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">Approved Cases</h5>
+          <p class="card-text text-center">
+            <span class="display-4 font-weight-bold">{{ approved_cases.count }}</span>
+          </p>
+          <a href="{% url 'approved_cases' %}" class="btn btn-light btn-block">View Approved Cases</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-danger mb-3 dashboard-card">
+        <div class="card-header">
+          <i class="fas fa-times-circle fa-3x"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">Rejected Cases</h5>
+          <p class="card-text text-center">
+            <span class="display-4 font-weight-bold">{{ rejected_cases.count }}</span>
+          </p>
+          <a href="{% url 'rejected_cases' %}" class="btn btn-light btn-block">View Rejected Cases</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-info mb-3 dashboard-card">
+        <div class="card-header">
+          <i class="fas fa-file-alt fa-3x"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">Documents</h5>
+          <p class="card-text text-center">
+            <span class="display-4 font-weight-bold">{{ documents.count }}</span>
+          </p>
+          <a href="{% url 'lawyer_documents' %}" class="btn btn-primary btn-block">View Documents</a>
+        </div>
+      </div>
+    </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<link rel="stylesheet" href="{% static 'css/documents.css' %}">
+  <script src="{% static 'js/documents.js' %}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{% static 'css/lawyer_dashboard.css' %}">
+<script src="{% static 'js/documents.js' %}"></script>
+{% endblock %}

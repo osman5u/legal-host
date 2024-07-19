@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="notifications-container">
+      <h1 class="notifications-title">Notifications</h1>
+      {% if notifications %}
+        <ol class="notifications-list">
+          {% for notification in notifications %}
+            <li class="notifications-item">
+              <div class="notification-content">
+                <h3 class="notification-case-title">{{ notification.case.title }}</h3>
+                <p class="notification-message">{{ notification.message }}</p>
+                <p class="notification-timestamp">{{ notification.created_at }}</p>
+              </div>
+            </li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <p class="no-notifications">No new notifications.</p>
+      {% endif %}
+    </div>
+  </div>
+<link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+{% endblock %}

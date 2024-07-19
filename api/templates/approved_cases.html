@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mb-4">Approved Cases</h1>
+    {% if approved_cases %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="" style="background-color: #28ce03; color: #fff;">
+            <tr>
+              <th>Case ID</th>
+              <th>Case Title</th>
+              <th>Client</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for case in approved_cases %}
+              <tr>
+                <td>{{ case.id }}</td>
+                <td>{{ case.title }}</td>
+                <td>{{ case.client.username }}</td>
+                <td>{{ case.status }}</td>
+                <td>
+                  <a href="{% url 'view_case' case.id %}" class="btn btn-primary btn-sm mr-2">View</a>
+                  <a href="{% url 'delete_approved_case' case.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p>No approved cases found.</p>
+    {% endif %}
+  </div>
+<link rel="stylesheet" href="{% static 'css/approved_case.css' %}">
+{% endblock %}

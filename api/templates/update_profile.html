@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/update_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="update-profile-container rounded shadow-lg p-5 animate__animated animate__fadeInUp">
+        <h1 class="text-center mb-4">Update Profile</h1>
+        <form id="update-profile-form" method="post" enctype="multipart/form-data" class="update-profile-form">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {% if field.name == 'profile_picture' %}
+                <div class="profile-picture-container">
+                    <img id="profile-picture-preview" src="#" alt="Profile Picture" class="img-fluid rounded-circle d-none">
+                    <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" class="form-control form-control-lg py-3" accept="image/*">
+                </div>
+                {% else %}
+                <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" class="form-control form-control-lg py-3" {% if field.value %}value="{{ field.value }}"{% endif %}>
+                {% endif %}
+                {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary update-profile-button btn-lg d-block w-100 py-3" style="background-color: #28ce03; border-color: #28ce03;">Save</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

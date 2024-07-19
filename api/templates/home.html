@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100" style="
+    background-image: url('{% static 'img/cleanback.jpeg' %}');
+    background-size: cover;
+
+    background-repeat: no-repeat;
+    filter: brigh">
+    <div class="text-center text-white welcome-text">
+        <h1 class="display-4 font-weight-bold mb-4">
+            <span class="welcome-text-1">Welcome to Legal System</span>
+        </h1>
+    </div>
+</div>
+
+<style>
+    .welcome-text {
+        animation: text-animation 15s linear infinite;
+    }
+
+    .welcome-text-1, .welcome-text-2 {
+        display: inline-block;
+        padding-right: 20px;
+    }
+
+    @keyframes text-animation {
+        0% {
+            transform: translateX(100%);
+            color: #28ce03;
+        }
+        50% {
+            transform: translateX(-100%);
+            color: #2196F3;
+        }
+        100% {
+            transform: translateX(100%);
+            color: #28ce03;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,25 @@
+/* static/css/update_document.css */
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.shiny-box-shadow-container {
+  background-color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  font-weight: 700;
+  color: #333333;
+}
+
+.submit-button {
+  background-color: #007bff;
+  border-color: #007bff;
+  font-weight: 600;
+}
+
+.submit-button:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}

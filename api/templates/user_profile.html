@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="profile-container rounded shadow-lg p-5 animate__animated animate__fadeInUp">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                {% if user.profile_picture %}
+                <img src="{{ user.profile_picture.url }}" alt="{{ user.full_name }}'s Profile Picture" class="img-fluid rounded-circle profile-picture">
+                {% else %}
+                <img src="https://via.placeholder.com/150" alt="Default Profile Picture" class="img-fluid rounded-circle profile-picture">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <h1 class="mb-4">{{ user.full_name }}</h1>
+                <p class="profile-info">Username: <span class="font-weight-bold">{{ user.username }}</span></p>
+                <p class="profile-info">Email: <span class="font-weight-bold">{{ user.email }}</span></p>
+                <p class="profile-info">Role: <span class="font-weight-bold">{{ user.get_role_display }}</span></p>
+                {% if user == request.user %}
+                <a href="{% url 'update_profile' %}" class="btn btn-primary profile-button" style="background-color: #28ce03; border-color: #28ce03;">Update Profile</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+ <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}

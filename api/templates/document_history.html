@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ block.super }}
+
+{% endblock %}
+
+
+{% block content %}
+  <div class="container-fluid shiny-box-shadow-container">
+    <h1 class="section-title">Document Sent History</h1>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered table-striped documents-table">
+        <thead class="table-header">
+          <tr>
+            <th>ID</th>
+            <th>File Name</th>
+            <th>Uploaded At</th>
+            <th>Case</th>
+            <th>Lawyer</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for document in documents %}
+          <tr class="table-row zoom-effect animated-item">
+            <td>{{ document.id }}</td>
+            <td><a href="{{ document.file.url }}" target="_blank" class="text-decoration-none">{{ document.file.name }}</a></td>
+            <td>{{ document.uploaded_at }}</td>
+            <td>{{ document.case.title }}</td>
+            <td>{{ document.lawyer.username }}</td>
+            <td class="d-flex justify-content-end">
+              <a href="{% url 'update_document' document.id %}" class="btn btn-primary btn-sm update-button mr-2">Update</a>
+              <a href="{% url 'delete_document' document.id %}" class="btn btn-danger btn-sm delete-button">Delete</a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6">No documents uploaded yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+ <link rel="stylesheet" href="{% static 'css/documents_sent_history.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="{% static 'js/documents.js' %}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="{% static 'js/documents.js' %}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+{% endblock %}
